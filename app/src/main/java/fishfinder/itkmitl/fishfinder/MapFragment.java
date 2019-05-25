@@ -14,10 +14,17 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     public static GoogleMap mMap;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference myRef = database.getReference("position");
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -28,7 +35,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        return inflater.inflate(R.layout.fragment_map, container, false);
         View view = inflater.inflate(R.layout.fragment_map, null, false);
 
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
@@ -43,8 +49,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("FishFinder"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                double lat = dataSnapshot.child("lat").getValue(Double.class);
+                double lng = dataSnapshot.child("lng").getValue(Double.class);
+
+                LatLng currentPos = new LatLng(lat, lng);
+                mMap.addMarker(new MarkerOptions().position(currentPos).title("FishFinder"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPos, 16));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 }
