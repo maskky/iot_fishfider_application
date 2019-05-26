@@ -20,9 +20,9 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout6"
-            android:layout_width="wrap_content"
+            android:layout_width="123dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/constraintLayout8"
-                tools:layout_editor_absoluteY="0dp">
+                app:layout_constraintTop_toTopOf="parent">
 
 
                 <TextView
@@ -102,20 +102,20 @@
                     android:fontFamily="@font/mitr"
                     android:text="สภาพอากาศ"
                     android:textColor="@color/colorYellow"
-                    android:textSize="12dp"
+                    android:textSize="14dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/status_weather"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/mitr"
-                    android:text="อากาศแจ่มใส"
+                    android:text="           "
                     android:textColor="@color/colorGrey"
-                    android:textSize="16dp"
+                    android:textSize="18dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -127,10 +127,10 @@
                 android:id="@+id/constraintLayout8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="10dp"
                 app:layout_constraintEnd_toStartOf="@+id/constraintLayout7"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="0dp">
+                app:layout_constraintTop_toTopOf="parent">
 
 
                 <TextView
@@ -140,20 +140,19 @@
                     android:fontFamily="@font/mitr"
                     android:text="อุณหภูมิผิวน้ำ"
                     android:textColor="@color/colorYellow"
-                    android:textSize="12dp"
+                    android:textSize="14dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView7"
+                    android:id="@+id/status_temp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/mitr"
-                    android:text="37 °C"
                     android:textColor="@color/colorGrey"
-                    android:textSize="16dp"
+                    android:textSize="18dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -171,7 +170,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:textSize="12dp"
+        android:textSize="14dp"
         android:text="หาตำแหน่งของทุ่น"
         android:fontFamily="@font/mitr"
         android:textColor="@color/colorGreen"
@@ -189,6 +188,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/status_findlocation">
 
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/status_forecast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/mitr"
+                android:text="มีโอกาสที่จะตกปลาได้น้อย"
+                android:textColor="@color/colorYellow"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/mitr"
+                android:text="คองเกรส ว้าว ยะเยือก ทาวน์เฮาส์แบนเนอร์ท็อปบูตวอฟเฟิล สป็อตชิฟฟอนโอเพ่น ซะดราม่าอันเดอร์ "
+                android:textColor="@color/colorBlue"
+                android:textSize="14dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/status_forecast" />
+        </android.support.constraint.ConstraintLayout>
+
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -203,6 +231,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/mitr"
+                android:text="สภาพอากาศในวันพรุ่งนี้"
+                android:textColor="@color/colorYellow"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/status_forecast_weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/mitr"
+                android:text="มีฝนฟ้าคะนอง, อุณหภูมิสูงสุด 34-37 องศาเซลเซียส,       ลมตะวันตกเฉียงใต้ ความเร็ว 10-15 กม./ชม."
+                android:textColor="@color/colorBlue"
+                android:textSize="14dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        </android.support.constraint.ConstraintLayout>
+
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -215,6 +273,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lorem"
+                android:fontFamily="@font/mitr"
+                android:textSize="16dp"
+                android:textColor="@color/colorYellow"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lordsfsdf sdfsdf"
+                android:fontFamily="@font/mitr"
+                android:textSize="14dp"
+                android:textColor="@color/colorBlue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
 
