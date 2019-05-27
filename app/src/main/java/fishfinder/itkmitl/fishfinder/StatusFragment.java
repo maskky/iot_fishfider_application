@@ -19,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import fishfinder.itkmitl.fishfinder.dialog.CustomLoading;
 import fishfinder.itkmitl.fishfinder.model.Position;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -26,20 +27,27 @@ import okhttp3.Response;
 
 public class StatusFragment extends Fragment {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference myRef = database.getReference("position");
-    private DatabaseReference myRef2 = database.getReference("temperature");
+    private DatabaseReference myRef = database.getReference("");
     private static String KEY = "1364d69e041a6537cb584debbcd644f4";
     private String weather = "";
     private TextView mapButton;
+    private String result = "";
+    private CustomLoading customLoading;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        customLoading = new CustomLoading(getContext());
+        customLoading.showDialog();
 
         mapButton = getView().findViewById(R.id.status_findlocation);
-        TextView status = getView().findViewById(R.id.status_status);
+        final TextView statusConnect = getView().findViewById(R.id.status_status);
+        final TextView statusForecastWeather = getView().findViewById(R.id.status_forecast_weather);
+        final TextView statusDesc = getView().findViewById(R.id.status_description);
+        final TextView statusForecast = getView().findViewById(R.id.status_forecast);
         final TextView temp = getView().findViewById(R.id.status_temp);
         final TextView weatherStatus = getView().findViewById(R.id.status_weather);
+
 
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,27 +60,15 @@ public class StatusFragment extends Fragment {
             }
         });
 
-        myRef2.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int tempResult = dataSnapshot.child("temp").getValue(Integer.class);
-                temp.setText(tempResult + " °C");
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Position position = dataSnapshot.getValue(Position.class);
+                Position position = dataSnapshot.child("position").getValue(Position.class);
                 String lat = String.valueOf(position.getLat());
                 String lng = String.valueOf(position.getLng());
 
+                final int tempResult = dataSnapshot.child("temperature/temp").getValue(Integer.class);
+                temp.setText(tempResult + " °C");
                 final String url= "https://samples.openweathermap.org/data/2.5/weather?lat=" + lat +"&lon=" + lng + "&appid=" + KEY;
                 Log.i("FB", "Lat : " + position.getLat() + " / " + "Lng : " + position.getLng());
 
@@ -83,16 +79,14 @@ public class StatusFragment extends Fragment {
                         Request request = new Request.Builder()
                                 .url(url)
                                 .build();
-
                         try {
                             Response response = client.newCall(request).execute();
-
                             JSONObject responseObject = new JSONObject(response.body().string());
                             JSONArray resultsArray = responseObject.getJSONArray("weather");
-
                             JSONObject jsonObject1 = resultsArray.getJSONObject(0);
                             int weatherStatus = Integer.parseInt(jsonObject1.optString("id"));
                             weather = checkWeatherStatus(weatherStatus);
+                            result = forecastFishing(tempResult, weatherStatus);
 
                             Log.i("api", weather + "");
                             Log.i("api", resultsArray + "");
@@ -108,7 +102,12 @@ public class StatusFragment extends Fragment {
                     @Override
                     protected void onPostExecute(Object o) {
                         weatherStatus.setText(weather);
-
+                        String[] arrayResult = result.split(",");
+                        Log.i("SS", arrayResult[1]);
+                        statusForecast.setText(arrayResult[0]);
+                        statusDesc.setText(arrayResult[1]);
+                        customLoading.dismissDialog();
+                        statusForecastWeather.setText("มีฝนฟ้าคะนอง, อุณหภูมิสูงสุด 34-37 องศาเซลเซียส,       ลมตะวันตกเฉียงใต้ ความเร็ว 10-15 กม./ชม.");
                     }
 
 
@@ -150,7 +149,15 @@ public class StatusFragment extends Fragment {
 
     String forecastFishing(int temperature, int weatherCode){
         String result = "";
-
+        if (temperature > 1){
+            if (weatherCode == 800 || weatherCode == 801){
+                result = "มีโอกาสตกปลาได้น้อย ,เนื่องจากอุณหภูมิสูงและแดดแรง ทำให้ปลาส่วนใหญ่จะหลบไปอาศัยอยู่ในน้ำลึก";
+            }else{
+                result = "มีโอกาสตกปลาได้น้อย ,เนื่องจากอุณหภูมิสูงและแดดแรง ทำให้ปลาส่วนใหญ่จะหลบไปอาศัยอยู่ในน้ำลึก แต่มีแนวโน้มว่าอุณหภูมิของน้ำจะลดลงหลังจากนั้นปลาจะขึ้นมาที่ผิวน้ำ ทำให้มีโอกาสตกปลาได้สูง";
+            }
+        }else{
+            result = "มีโอกาสตกปลาได้สูง ,เนื่องจากปลาจะขึ้นมาที่ผิวน้ำเนื่องจากอุณหภูมิต่ำ และต้องการออกซิเจนที่ผิวน้ำ";
+        }
         return result;
     }
 
