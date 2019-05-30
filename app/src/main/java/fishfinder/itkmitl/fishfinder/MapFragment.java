@@ -26,7 +26,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     public static GoogleMap mMap;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference myRef = database.getReference("position");
+    private DatabaseReference myRef = database.getReference("positionfix");
     private Button button;
     private CustomLoading customLoading;
 

@@ -142,16 +142,16 @@ public class StatusFragment extends Fragment {
         }else if (weatherCode >= 801 && weatherCode <= 804){
             result = "มีเมฆมาก";
         }else{
-            result = "อากาศแจ่มใส";
+            result = "มีเมฆมาก";
         }
         return result;
     }
 
     String forecastFishing(int temperature, int weatherCode){
         String result = "";
-        if (temperature > 1){
+        if (temperature > 30){
             if (weatherCode == 800 || weatherCode == 801){
-                result = "มีโอกาสตกปลาได้น้อย ,เนื่องจากอุณหภูมิสูงและแดดแรง ทำให้ปลาส่วนใหญ่จะหลบไปอาศัยอยู่ในน้ำลึก";
+                result = "มีโอกาสตกปลาได้น้อย ,เนื่องจากอุณหภูมิสูง ทำให้ปลาส่วนใหญ่จะหลบไปอาศัยอยู่ในน้ำลึก";
             }else{
                 result = "มีโอกาสตกปลาได้น้อย ,เนื่องจากอุณหภูมิสูงและแดดแรง ทำให้ปลาส่วนใหญ่จะหลบไปอาศัยอยู่ในน้ำลึก แต่มีแนวโน้มว่าอุณหภูมิของน้ำจะลดลงหลังจากนั้นปลาจะขึ้นมาที่ผิวน้ำ ทำให้มีโอกาสตกปลาได้สูง";
             }
